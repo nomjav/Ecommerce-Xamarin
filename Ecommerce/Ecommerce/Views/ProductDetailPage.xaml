@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Ecommerce.Views.ProductDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.TabBarIsVisible="False">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding ShareCommand}" IconImageSource="ic_share" />
+    </ContentPage.ToolbarItems>
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}" />
+    </Shell.BackButtonBehavior>
+    <ContentPage.Content>
+        <ScrollView>
+            <Frame>
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label HorizontalOptions="StartAndExpand" Text="10 Likes" />
+                        <Label HorizontalOptions="EndAndExpand" Text="20 Comments" />
+                    </StackLayout>
+                    <Image HeightRequest="250" Source="MensWearCollectionLogo.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        Text="Shirt" />
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="$100.99" />
+                    <Label Text="Casual Wear" />
+                    <StackLayout Orientation="Horizontal">
+                        <Label Margin="0,5,0,0" Text="Select Size" />
+                        <RadioButton Content="S" />
+                        <RadioButton Content="M" />
+                        <RadioButton Content="L" />
+                        <RadioButton Content="XL" />
+                    </StackLayout>
+
+                    <Button
+                        HorizontalOptions="Center"
+                        Text="Add To Cart"
+                        VerticalOptions="EndAndExpand" />
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

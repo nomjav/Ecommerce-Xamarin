@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Ecommerce.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Ecommerce.SharedViews"
+    xmlns:local1="clr-namespace:Ecommerce.ViewModels"
+    x:Name="ParentView"
+    Title="Ecommerce">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AddItemCommand}" IconImageSource="icon_about" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="#FBFBFB">
+            <StackLayout>
+                <CarouselView
+                    Margin="16"
+                    HeightRequest="200"
+                    ItemsSource="{Binding slides}">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame
+                                BorderColor="DarkGray"
+                                CornerRadius="6"
+                                HasShadow="false"
+                                IsClippedToBounds="True">
+                                <RelativeLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+                                    <Image
+                                        Margin="-20"
+                                        Aspect="Fill"
+                                        BackgroundColor="blue"
+                                        HorizontalOptions="Fill"
+                                        Source="{Binding Image}" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="Large"
+                                        RelativeLayout.XConstraint="0"
+                                        RelativeLayout.YConstraint="40"
+                                        Text="{Binding Title}"
+                                        TextColor="White" />
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        RelativeLayout.XConstraint="0"
+                                        RelativeLayout.YConstraint="75"
+                                        Text="{Binding Description}"
+                                        TextColor="White" />
+                                    <Button
+                                        BackgroundColor="white"
+                                        Command="{Binding BindingContext.ShopCommand, Source={x:Reference ParentView}}"
+                                        CommandParameter="{Binding Title}"
+                                        CornerRadius="1"
+                                        RelativeLayout.XConstraint="0"
+                                        RelativeLayout.YConstraint="100"
+                                        Text="Shop Now"
+                                        TextColor="Black"
+                                        WidthRequest="100" />
+                                </RelativeLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+
+                <StackLayout Margin="16,0,16,0" Orientation="Horizontal">
+                    <Label
+                        FontSize="Large"
+                        Text="Collection"
+                        TextColor="Black" />
+                    <Label
+                        FontSize="Small"
+                        HorizontalOptions="EndAndExpand"
+                        Text="View All"
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local1:MainViewModel}}, Path=ItemTapped}" NumberOfTapsRequired="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+                <local:CollectionItems x:Name="collectionItems" Padding="6,0,6,0" />
+                <Frame
+                    Margin="16"
+                    CornerRadius="6"
+                    HasShadow="false"
+                    IsClippedToBounds="True">
+                    <Image Margin="-20" Source="saleBanner.jpg" />
+                </Frame>
+                <StackLayout Margin="16,0,16,0" Orientation="Horizontal">
+                    <Label
+                        FontSize="Large"
+                        Text="Popular"
+                        TextColor="Black" />
+                    <Label
+                        FontSize="Small"
+                        HorizontalOptions="EndAndExpand"
+                        Text="View All"
+                        VerticalOptions="Center" />
+                </StackLayout>
+
+                <local:CollectionItems Padding="6,0,6,16" />
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

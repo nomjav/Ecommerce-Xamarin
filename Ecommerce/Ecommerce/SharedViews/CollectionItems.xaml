@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="Ecommerce.SharedViews.CollectionItems"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Ecommerce.ViewModels"
+    xmlns:model="clr-namespace:Ecommerce.Models">
+    <ContentView.Content>
+        <Grid>
+
+            <CollectionView
+                x:Name="ItemsListView"
+                HeightRequest="100"
+                ItemsSource="{Binding Items}"
+                SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        x:Name="ItemsListItemsLayout"
+                        ItemSpacing="16"
+                        Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                            BorderColor="white"
+                            CornerRadius="6"
+                            HasShadow="false">
+                            <StackLayout x:DataType="model:CategoryModel" Orientation="Horizontal">
+                                <StackLayout WidthRequest="70">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        LineBreakMode="WordWrap"
+                                        Style="{DynamicResource ListItemTextStyle}"
+                                        Text="{Binding Name}" />
+                                    <Label
+                                        FontSize="13"
+                                        LineBreakMode="TailTruncation"
+                                        Style="{DynamicResource ListItemDetailTextStyle}"
+                                        Text="{Binding Description}" />
+                                </StackLayout>
+                                <Image Source="{Binding Sale}" />
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"
+                                        CommandParameter="{Binding .}"
+                                        NumberOfTapsRequired="1" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <ActivityIndicator
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                Scale="0.5"
+                Color="{StaticResource Primary}" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

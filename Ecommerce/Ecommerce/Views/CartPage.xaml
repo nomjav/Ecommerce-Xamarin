@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Ecommerce.Views.CartPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:Ecommerce.ViewModels"
+    Title="Cart"
+    BackgroundColor="#FBFBFB">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding ClearCartCommand}" Text="Clear All" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <CollectionView Margin="16" ItemsSource="{Binding Items}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        x:Name="ItemsListItemsLayout"
+                        ItemSpacing="16"
+                        Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout
+                            Margin="16"
+                            BackgroundColor="White"
+                            HeightRequest="100"
+                            Orientation="Horizontal"
+                            VerticalOptions="Start">
+                            <Image
+                                HeightRequest="70"
+                                HorizontalOptions="CenterAndExpand"
+                                Source="{Binding Image}"
+                                VerticalOptions="CenterAndExpand" />
+                            <StackLayout
+                                Padding="10"
+                                BackgroundColor="#E1F0FF"
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Vertical">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="Large"
+                                        HorizontalOptions="StartAndExpand"
+                                        Text="{Binding Name}" />
+                                    <Button
+                                        BackgroundColor="Crimson"
+                                        HeightRequest="35"
+                                        Text="x"
+                                        WidthRequest="35" />
+                                </StackLayout>
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Medium"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{Binding UnitPrice}"
+                                    VerticalOptions="CenterAndExpand" />
+
+                                <StackLayout Orientation="Horizontal">
+                                    <Stepper />
+                                    <Label
+                                        Padding="0,0,0,12"
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        HorizontalOptions="EndAndExpand"
+                                        Text="{Binding Quantity}"
+                                        VerticalOptions="EndAndExpand" />
+                                </StackLayout>
+                                <Entry
+                                    FontAttributes="Bold"
+                                    FontSize="Large"
+                                    HorizontalOptions="EndAndExpand"
+                                    IsReadOnly="True"
+                                    Text="{Binding Total}" />
+                            </StackLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <StackLayout
+                Margin="16"
+                Padding="16"
+                x:DataType="viewmodels:CartViewModel"
+                BackgroundColor="#2296F3"
+                Orientation="Horizontal">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    HorizontalOptions="StartAndExpand"
+                    Text="GrandTotal"
+                    TextColor="White" />
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    HorizontalOptions="EndAndExpand"
+                    Text="150"
+                    TextColor="White" />
+
+            </StackLayout>
+            <Button
+                Margin="16,0,16,16"
+                BackgroundColor="Orange"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                Text="Proceed To CheckOut &gt;" />
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

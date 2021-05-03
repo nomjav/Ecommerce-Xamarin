@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Ecommerce.Views.ItemsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Ecommerce.ViewModels"
+    xmlns:model="clr-namespace:Ecommerce.Models"
+    x:Name="BrowseItemsPage"
+    Title="{Binding Title}"
+    BackgroundColor="#FBFBFB">
+
+
+    <!--
+        x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <RefreshView
+        Margin="16"
+        x:DataType="local:ItemsViewModel"
+        Command="{Binding LoadItemsCommand}"
+        IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView
+            x:Name="ItemsListView"
+            ItemsSource="{Binding Items}"
+            SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    x:Name="ItemsListItemsLayout"
+                    ItemSpacing="5"
+                    Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Margin="16"
+                        BorderColor="white"
+                        CornerRadius="6"
+                        HasShadow="false"
+                        HeightRequest="80">
+                        <Grid Margin="16" x:DataType="model:CategoryModel">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                Style="{DynamicResource ListItemTextStyle}"
+                                Text="{Binding Name}" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                FontSize="13"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                Text="{Binding Description}" />
+
+                            <Image
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                HorizontalOptions="EndAndExpand"
+                                Source="{Binding Sale}" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"
+                                    CommandParameter="{Binding .}"
+                                    NumberOfTapsRequired="1" />
+                            </Grid.GestureRecognizers>
+
+                        </Grid>
+
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

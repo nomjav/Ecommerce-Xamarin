@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Ecommerce.Views.ItemDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customcontrol="clr-namespace:Ecommerce.SharedViews"
+    xmlns:local="clr-namespace:Ecommerce.ViewModels"
+    xmlns:model="clr-namespace:Ecommerce.Models"
+    Title="{Binding Title}"
+    BackgroundColor="#FBFBFB"
+    Shell.TabBarIsVisible="False">
+    <RefreshView
+        Margin="16"
+        x:DataType="local:ItemDetailViewModel"
+        Command="{Binding LoadProductsCommand}"
+        CommandParameter="{Binding Id}"
+        IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView ItemsLayout="VerticalGrid, 2" ItemsSource="{Binding Items}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" x:DataType="model:Item">
+                        <Frame
+                            BorderColor="white"
+                            CornerRadius="6"
+                            HasShadow="false">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image
+                                    Grid.ColumnSpan="2"
+                                    Aspect="AspectFit"
+                                    HeightRequest="150"
+                                    Source="{Binding Image}" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontAttributes="Bold"
+                                    LineBreakMode="NoWrap"
+                                    Text="{Binding Name}" />
+                                <customcontrol:RatingBar
+                                    x:Name="customRattingBar"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    EmptyStarImage="emptystar"
+                                    FillStarImage="fillstar"
+                                    HorizontalOptions="EndAndExpand"
+                                    ImageHeight="5"
+                                    ImageWidth="5"
+                                    SelectedStarValue="{Binding Rating}" />
+                                <Label Grid.Row="2" Text="{Binding Description}" />
+                                <Label
+                                    Grid.Row="3"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Price}" />
+                                <Label
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Padding="5"
+                                    BackgroundColor="#f5c542"
+                                    FontSize="Micro"
+                                    HorizontalOptions="End"
+                                    LineBreakMode="TailTruncation"
+                                    Text="{Binding Sale}" />
+                            </Grid>
+                        </Frame>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemDetailViewModel}}, Path=ItemTapped}" NumberOfTapsRequired="1" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>
